@@ -1,60 +1,67 @@
-// Make sure we wait to attach our handlers until the DOM is fully loaded.
-$(function() {
-  $(".change-sleep").on("click", function(event) {
-    var id = $(this).data("id");
-    var newSleep = $(this).data("newsleep");
+//document. ready function
+$(document).ready(function(){
 
-    var newSleepState = {
-      sleepy: newSleep
-    };
+    $(".deleteBurg").on("click", function(event) {
+        var id = $(this).data("delburgerid");
+        console.log(id);
 
-    // Send the PUT request.
-    $.ajax("/api/cats/" + id, {
-      type: "PUT",
-      data: newSleepState
-    }).then(
-      function() {
-        console.log("changed sleep to", newSleep);
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-  });
+        $.ajax("/burgers/" + id, {
+          type: "DELETE"
+        }).then(
+          function() {
 
-  $(".create-form").on("submit", function(event) {
-    // Make sure to preventDefault on a submit event.
-    event.preventDefault();
+            console.log("deleted id ", id);
 
-    var newCat = {
-      name: $("#ca").val().trim(),
-      sleepy: $("[name=sleepy]:checked").val().trim()
-    };
+            location.reload();
+          }
+        );
+      });
 
-    // Send the POST request.
-    $.ajax("/api/cats", {
-      type: "POST",
-      data: newCat
-    }).then(
-      function() {
-        console.log("created new cat");
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-  });
+    $("#newBurger").on("submit", function(event) {
 
-  $(".delete-cat").on("click", function(event) {
-    var id = $(this).data("id");
+        event.preventDefault();
 
-    // Send the DELETE request.
-    $.ajax("/api/cats/" + id, {
-      type: "DELETE",
-    }).then(
-      function() {
-        console.log("deleted cat", id);
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-  });
+        var newBurger = {
+          burgers: $("#newBurger [name=burger]").val().trim()
+        };
+
+        if (newBurger.burgers.length === 0) {
+          $("#error").html("Please input a burger before attempting to add");
+        }
+
+        else {
+          $("#error").html("");
+          // console.log(burgers);
+
+
+          $.ajax("/burgers", {
+            type: "POST",
+            data: newBurger
+          }).then(
+            function() {
+              console.log("created new burger");
+
+              location.reload();
+            }
+          );
+        }
+      });
+
+   $(".updateBurg").on("click", function(event) {
+        var id = $(this).data("putburgerid");
+        console.log(id);
+
+        $.ajax("/burgers/" + id, {
+          type: "PUT"
+        }).then(
+          function() {
+
+            console.log("updated id ", id);
+
+            location.reload();
+          }
+        );
+
+      });
+
 });

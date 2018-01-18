@@ -1,25 +1,23 @@
 var express = require("express");
+var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
-var methodOveride = require("method-override");
+var routes = require("./controllers/burgersController.js");
 
-var port = process.env.PORT || 3000;
+var port = 8080;
 
 var app = express();
-
-// Serve static content for the app from the "public" directory in the application directory.
+//where should we input listen.port(or if we even need to in this case)
 app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Set Handlebars.
-var exphbs = require("express-handlebars");
+app.use(bodyParser.json({ type: 'application/json' }));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Import routes and give the server access to them.
-var routes = require("./controllers/catsController.js");
-
 app.use("/", routes);
 
-app.listen(port);
+app.listen(process.env.PORT || port, function(err){
+	if (err) throw err;
+	console.log("Listening on port number " + port)
+});

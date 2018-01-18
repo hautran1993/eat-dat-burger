@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-		<link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
-		<title>MVC With Cats!</title>
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="/assets/js/cats.js"></script>
-	</head>
-	<body>
-		{{{ body }}}
-	</body>
-</html>
+	<html lang="en">
+		<head>
+		  <meta charset="UTF-8">
+		  <title>Eat Da Burger</title>
+		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		  <link rel="stylesheet" href="./assets/css/style.css">
+		  <script src="https://code.jquery.com/jquery.js"></script>
+		  <script src="./assets/js/burgers.js"></script>
+		</head>
+		<body>
+
+
+		    <div class="container">
+		      <div class="header clearfix">
+		        <nav>
+		          <ul class="nav nav-pills pull-right">
+		            <li role="presentation"><a href="/">Home</a></li>
+		            <li role="presentation"><a href="/burgers">Burgers</a></li>
+		          </ul>
+		        </nav>
+		        <h3 class="text-muted">Eat-Da-Burger</h3>
+		      </div>
+			<div>
+		     {{{body}}}
+			</div>
+			<br>
+			<br>
+		    </div> <!-- /container -->
+		</body>
+	</html>

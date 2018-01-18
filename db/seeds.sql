@@ -4,6 +4,7 @@ use burgers_db;
 
 INSERT INTO burgers (burger_name)
 	VALUES ("Double Cheese"),
-			("Bacon Cheese");
+			("Bacon Cheese")
+			("egg and bacon burger");
 
 select * from burgers;

@@ -1,12 +1,16 @@
-### Schema
+-- Create the database:
+Drop database if exists  burgers_db;
 
-CREATE DATABASE cat_db;
-USE cat_db;
+create database burgers_db;
 
-CREATE TABLE cats
-(
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar(255) NOT NULL,
-	sleepy BOOLEAN DEFAULT false,
-	PRIMARY KEY (id)
+use burgers_db;
+
+-- Create Burgers Table:
+
+create table burgers(
+	id int auto_increment NOT NULL,
+	burger_name varchar(50) NOT NULL,
+	devoured boolean default false NOT NULL,
+	date timestamp NOT NULL,
+	PRIMARY KEY(id)
 );
