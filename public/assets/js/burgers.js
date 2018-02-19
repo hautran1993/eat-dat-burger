@@ -1,67 +1,17 @@
-//document. ready function
-$(document).ready(function(){
+$(document).on("click", ".del-btn", function(e) {
+  $.ajax({
+      url: `api/devour/${$(this).attr("data-id")}`,
+      method: "PUT"
+  }).then(data => {
+      location.reload(true);
+  });
+});//ending of document click function no need for a document.ready this way
 
-    $(".deleteBurg").on("click", function(event) {
-        var id = $(this).data("delburgerid");
-        console.log(id);
-
-        $.ajax("/burgers/" + id, {
-          type: "DELETE"
-        }).then(
-          function() {
-
-            console.log("deleted id ", id);
-
-            location.reload();
-          }
-        );
-      });
-
-    $("#newBurger").on("submit", function(event) {
-
-        event.preventDefault();
-
-        var newBurger = {
-          burgers: $("#newBurger [name=burger]").val().trim()
-        };
-
-        if (newBurger.burgers.length === 0) {
-          $("#error").html("Please input a burger before attempting to add");
-        }
-
-        else {
-          $("#error").html("");
-          // console.log(burgers);
-
-
-          $.ajax("/burgers", {
-            type: "POST",
-            data: newBurger
-          }).then(
-            function() {
-              console.log("created new burger");
-
-              location.reload();
-            }
-          );
-        }
-      });
-
-   $(".updateBurg").on("click", function(event) {
-        var id = $(this).data("putburgerid");
-        console.log(id);
-
-        $.ajax("/burgers/" + id, {
-          type: "PUT"
-        }).then(
-          function() {
-
-            console.log("updated id ", id);
-
-            location.reload();
-          }
-        );
-
-      });
-
-});
+$(document).on("click", "#submit-btn", function(e) {
+  const burger = {
+      name: $("#burger-input").val().trim()
+  }
+  $.post(`api/new`, burger, (data) => {
+      location.reload(true);
+  });
+});//end of document click function

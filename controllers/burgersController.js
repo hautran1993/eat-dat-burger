@@ -1,72 +1,38 @@
-//require proper npms
-var express = require("express");
+//dependecies
+const router = require('express').Router();
+const burger = require('../models/burger.js');
 
-var router = express.Router();
-//require the burger.js from models
-var burger = require("../models/burger.js");
-//setting router / to home
-router.get("/", function(req, res) {
-	res.render("home");
-})
 
-router.get("/burgers", function(req, res) {
-  burger.all(function(data) {
-
-    var hbsObject = {
-      devoured: [],
-      notDevoured: []
-    }
-
-    var devoured = [];
-    var notDevoured = [];
-
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].devoured) {
-        hbsObject.devoured.push(data[i]);
-      }
-      else {
-        hbsObject.notDevoured.push(data[i]);
-      }
-    }
-    res.render("burger", hbsObject);
-
-  });
+router.get("/", (req, res) => {
+    burger.selectAllBurgers().then(burgers => {
+        console.log("'/' response =====================");
+        console.log(burgers);
+        res.render("index",  burgers);
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
-router.post("/burgers", function(req, res) {
-  burger.create([req.body.burgers], function(result) {
-
-    res.json({ id: result.insertId });
-  });
+router.post("/api/new", (req, res) => {
+    burger.insertNewBurger(req.body.name).then(data => {
+        console.log("'/api/new' response =====================");
+        console.log(data);
+        console.log(req.body.name);
+        res.redirect("/");
+    }).catch(err => {
+        console.log(err);
+    });;
 });
 
-router.delete("/burgers/:id", function(req, res) {
-  var condition = req.params.id;
-
-  burger.delete([condition], function(result) {
-    if (result.affectedRows === 0) {
-
-      return res.status(404).end();
-    } else {
-
-      res.status(200).end();
-    }
-  });
+router.put("/api/devour/:id", (req, res) => {
+    burger.devourBurger(parseInt(req.params.id)).then(data => {
+        console.log("'/api/devour' response =====================");
+        console.log(data);
+        res.set('X-HTTP-Method-Override', 'GET');
+        res.redirect(303, "/");
+    }).catch(err => {
+        console.log(err);
+    });
 });
-
-
-router.put("/burgers/:id", function(req, res) {
-  var id = req.params.id;
-  burger.update([id], function(result) {
-    if (result.affectedRows === 0) {
-
-      return res.status(404).end();
-    } else {
-
-      res.status(200).end();
-    }
-  });
-});
-
 
 module.exports = router;

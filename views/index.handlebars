@@ -1,31 +1,30 @@
-<!DOCTYPE html>
-	<html lang="en">
-		<head>
-		  <meta charset="UTF-8">
-		  <title>Eat Da Burger</title>
-		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		  <link rel="stylesheet" href="./assets/css/style.css">
-		  <script src="https://code.jquery.com/jquery.js"></script>
-		  <script src="./assets/js/burgers.js"></script>
-		</head>
-		<body>
+
+<div class="row">
+
+  <div class="col-xs-12 col-md-2 col-md-push-5">
+	  <h2>Burger picture goes here</h2>
+  </div>
 
 
-		    <div class="container">
-		      <div class="header clearfix">
-		        <nav>
-		          <ul class="nav nav-pills pull-right">
-		            <li role="presentation"><a href="/">Home</a></li>
-		            <li role="presentation"><a href="/burgers">Burgers</a></li>
-		          </ul>
-		        </nav>
-		        <h3 class="text-muted">Eat-Da-Burger</h3>
-		      </div>
-			<div>
-		     {{{body}}}
-			</div>
-			<br>
-			<br>
-		    </div> <!-- /container -->
-		</body>
-	</html>
+	<div class="col-xs-6 col-md-5 col-md-pull-2">
+		<ul class="list-group">
+		{{#each notEaten}}
+			<li class="list-group-item"><p>
+				{{this.id}}. {{this.burger_name}} 
+					<button data-id={{this.id}} class="del-btn btn btn-warning">Devour</button>
+			</p></li>
+		{{/each}}
+		</ul>
+	</div>
+
+	<div class="col-xs-6 col-md-5">
+		<ul class="list-group">
+		{{#each eaten}}
+			<li class="list-group-item list-group-item-warning"><p>
+        {{this.id}}. {{this.burger_name}}
+      </p></li>
+		{{/each}}
+		</ul>
+	</div>
+
+</div>

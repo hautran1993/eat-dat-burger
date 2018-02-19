@@ -1,47 +1,35 @@
-var connection = require("./connection.js");
 
-var orm = {
-   //create function
-	create: function(table, colName, value, callback){
-		var queryName = "INSERT INTO " + table + " (" + colName + ") VALUES ('" + value + "');"
-		connection.query(queryName, function(err, result) {
-	        if (err) {
-	        	throw err;
-	        }
-	        callback(result);
-	    });
-	},
-   //all function
-    all: function(select, table, callback) {
-	    var queryName = "SELECT " + select + " FROM " + table + ";";
-	    connection.query(queryName, function(err, result) {
-		    if (err) {
-		    	throw err;
-		    }
-    		callback(result);
-    	});
-  	},
-   //delete function
-  	delete: function(table, colName, value, callback) {
-  		var queryName = "DELETE FROM " + table + " WHERE " + colName + " = '" + value + "';"
-  		connection.query(queryName, function(err, result) {
-  			if (err) {
-		    	throw err;
-		    }
-    		callback(result);
-  		});
-  	},
-   //update function
-  	update: function(table, colName1, value1, colName2, value2, callback) {
-  		var queryName = "UPDATE " + table + " SET " + colName1 + " = '" + value1 + "' WHERE " + colName2 + " = '" + value2 + "';"
+const conn = require('./connection.js');
 
-  		connection.query(queryName, function(err, result){
-  			if (err) {
-		    	throw err;
-		    }
-    		callback(result);
-  		})
-  	}
-};
+module.exports = {
+    selectAll: async function() {
+        return new Promise( (resolve, reject) => {
+            const query = `SELECT * FROM burgers`;
+            conn.query(query, (err, res) => {
+                if(err) reject(err);
+                resolve(res);
+            });
+        });
+    },
 
-module.exports = orm;
+    insertOne: async function(burger) {
+        return new Promise( (resolve, reject) => {
+            const query = `INSERT INTO burgers (burger_name) VALUES (?)`;
+            conn.query(query, burger, (err, res) => {
+                if(err) reject(err);
+                resolve(res);
+            });
+        });
+    },
+
+    updateOne: async function(id) {
+        return new Promise( (resolve, reject) => {
+            const query = `UPDATE burgers SET devoured = true WHERE id = ?`;
+            conn.query(query, id, (err, res) => {
+                if(err) reject(err);
+                console.log("Burger updated");
+                resolve(res);
+            });
+        });
+    }
+}

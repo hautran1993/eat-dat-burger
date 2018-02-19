@@ -1,32 +1,20 @@
-//import orm.js from config folder
-var orm = require("../config/orm.js");
-//burger obj
-var burger = {
+const orm = require('../config/orm.js');
 
-  all: function(cb) {
-    orm.all("*", "burgers", function(res) {
-      cb(res);
-    });
-  },
+module.exports = {
+    selectAllBurgers: async function() {
+        const burgers = await orm.selectAll();
 
-  create: function(val, cb) {
-    orm.create("burgers", "burger_name", val, function(res) {
-      cb(res);
-    });
-  },
+        return {
+            notEaten: burgers.filter(burger => !burger.devoured),
+            eaten: burgers.filter(burger => burger.devoured)
+        };
+    },
 
-  delete: function(val, cb) {
-    orm.delete("burgers", "id", val, function(res) {
-      cb(res);
-    });
-  },
+    insertNewBurger: async function(name) {
+        return await orm.insertOne(name);
+    },
 
-  update: function(val, cb) {
-    orm.update("burgers", "devoured", 1, "id", val, function(res){
-      cb(res);
-    });
-  }
+    devourBurger: async function(id) {
+        return await orm.updateOne(id);
+    }
 };
-
-
-module.exports = burger;
