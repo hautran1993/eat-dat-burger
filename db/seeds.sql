@@ -2,9 +2,10 @@ use burgers_db;
 
 -- Input values into burgers table:
 
-INSERT INTO burgers (burger_name)
-	VALUES ("Double Cheese"),
-			("Bacon Cheese")
-			("egg and bacon burger");
+insert into burgers( burger_name ) value ( "Triple Bacon Cheeseburger" );
+
+insert into burgers( burger_name ) value ( "Avocado Chicken Burger" );
+
+insert into burgers( burger_name ) value ( "The Works" );
 
 select * from burgers;

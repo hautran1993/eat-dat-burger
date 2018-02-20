@@ -2,6 +2,7 @@ const orm = require('../config/orm.js');
 
 module.exports = {
     selectAllBurgers: async function() {
+        //await needs async syntax to run
         const burgers = await orm.selectAll();
 
         return {
